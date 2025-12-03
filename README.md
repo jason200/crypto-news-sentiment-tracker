@@ -49,19 +49,28 @@ crypto-news-sentiment-tracker/
 
 ## Installation
 
-1. Create environment
+### 1. Create environment
 
 ```bash
 conda create -n crypto410 python=3.10 -y
 conda activate crypto410
 ```
 
-2. Install required packages
+### 2. Install dependencies
 
+#### Option A — using requirements.txt (recommended)
 ```bash
 pip install -r requirements.txt
 python -m textblob.download_corpora
 ```
+
+#### Option B — manual install (if requirements.txt is not available)
+```bash
+pip install pyserini==0.24.0 pandas textblob matplotlib yfinance tqdm numpy
+python -m textblob.download_corpora
+```
+
+> Note: Ensure Java 11 is installed and `java -version` works. Pyserini requires Java.
 
 ---
 
@@ -118,8 +127,7 @@ Output files are saved in `outputs/sentiment_histograms/`.
 To generate trend overlays between monthly sentiment and BTC/ETH prices:
 
 ```bash
-python trend_vs_price.py --asset BTC
-python trend_vs_price.py --asset ETH
+python trend_vs_price.py
 ```
 
 Output charts are saved in `outputs/trend_plots/`.
