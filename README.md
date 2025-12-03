@@ -1,4 +1,4 @@
-# crypto-news-sentiment-tracker
+# crypto-news-sentiment-Search and Trend-tracker
 
 UIUC CS410 Final Project — Fall 2025  
 Crypto News Sentiment Search and Trend Tracker  
