@@ -1,0 +1,7 @@
+pyserini
+pandas
+textblob
+matplotlib
+yfinance
+tqdm
+numpy
