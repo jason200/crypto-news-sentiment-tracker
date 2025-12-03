@@ -79,7 +79,7 @@ python -m textblob.download_corpora
 To clean and convert the dataset to JSONL format:
 
 ```bash
-python main.py --prepare
+python main.py 
 ```
 
 This reads `data/crypto-news.csv`, processes and stores output in `processed_corpus/crypto/`.
