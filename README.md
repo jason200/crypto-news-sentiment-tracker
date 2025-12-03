@@ -1,24 +1,159 @@
 # crypto-news-sentiment-tracker
-UIUC CS410 Final Project — Crypto News Sentiment Search and Trend Tracker A Python-based system integrating BM25 retrieval, TextBlob sentiment analysis, and financial trend visualization.
 
-# Crypto News Sentiment Search and Trend Tracker
+UIUC CS410 Final Project — Fall 2025  
+Crypto News Sentiment Search and Trend Tracker  
+A Python-based system for BM25 retrieval, sentiment analysis, and financial trend visualization.
 
-**Author:** Seokhyun Lee (sl251)  
-**Course:** CS410 – Text Information Systems  
-**Semester:** Fall 2025  
-**Instructor:** ChengXiang Zhai  
-**Institution:** University of Illinois Urbana-Champaign  
+## Author
+
+Seokhyun Lee (sl251)  
+Course: CS410 – Text Information Systems  
+Instructor: Prof. ChengXiang Zhai  
+Institution: University of Illinois Urbana-Champaign  
 
 ---
 
-## 🧭 Overview
+## Project Overview
 
-This project implements a lightweight **information retrieval and sentiment analysis pipeline** designed to study public sentiment trends across cryptocurrency-related news headlines and correlate them with actual market behavior.
+This project implements a lightweight information retrieval pipeline to search cryptocurrency news headlines and analyze sentiment trends. It supports BM25-based headline search, sentiment scoring, histogram plotting, and visualization of sentiment trends alongside actual BTC/ETH market prices.
 
-The system combines:
-- **Pyserini BM25** — for text-based retrieval from a corpus of crypto news headlines  
-- **TextBlob** — for sentiment polarity scoring (–1 = negative, +1 = positive)  
-- **Matplotlib** — for visualization of sentiment histograms and time-based trend overlays  
-- **Yahoo Finance API (yfinance)** — for fetching historical BTC/USD and ETH/USD prices  
+---
 
-All computations run efficiently on CPU hardware, making this system fully reproducible in standard academic environments.
+## Features
+
+- BM25 retrieval using Pyserini (Lucene index)
+- Sentiment analysis using TextBlob (–1 to +1)
+- Sentiment histograms for selected queries
+- Monthly sentiment aggregation
+- Overlay of sentiment vs BTC/ETH historical prices (via Yahoo Finance)
+- Fully CPU-compatible; no GPU needed
+
+---
+
+## Repository Structure
+
+crypto-news-sentiment-tracker/  
+├── data/                         # Raw CSV data (crypto-news.csv)  
+├── processed_corpus/            # Preprocessed JSONL documents  
+├── indexes/                     # BM25 index (Lucene format)  
+├── outputs/                     # PNG output files  
+│   ├── sentiment_histograms/    # Histograms for sentiment distribution  
+│   └── trend_plots/             # Monthly sentiment vs price trend plots  
+├── main.py                      # Retrieval, indexing, and querying  
+├── demo_queries.py              # Sample queries with histogram generation  
+├── trend_vs_price.py            # Sentiment trend overlay with BTC/ETH price  
+├── requirements.txt             # Python dependencies  
+└── README.md                    # Project documentation  
+
+---
+
+## Installation
+
+1. Create environment
+
+```bash
+conda create -n crypto410 python=3.10 -y
+conda activate crypto410
+```
+
+2. Install required packages
+
+```bash
+pip install -r requirements.txt
+python -m textblob.download_corpora
+```
+
+---
+
+## Data Preparation
+
+To clean and convert the dataset to JSONL format:
+
+```bash
+python main.py --prepare
+```
+
+This reads `data/crypto-news.csv`, processes and stores output in `processed_corpus/crypto/`.
+
+---
+
+## Indexing
+
+To build the BM25 index using Pyserini:
+
+```bash
+python main.py --build-index
+```
+
+Lucene index is saved to `indexes/crypto/`.
+
+---
+
+## Searching
+
+Run a BM25 search query and view ranked results with sentiment scores:
+
+```bash
+python main.py --query "bitcoin regulation"
+```
+
+Outputs top-20 headlines with their BM25 score and sentiment polarity.
+
+---
+
+## Sentiment Histogram Visualization
+
+To run example queries and plot histograms:
+
+```bash
+python demo_queries.py
+```
+
+Output files are saved in `outputs/sentiment_histograms/`.
+
+---
+
+## Sentiment Trend vs Market Price
+
+To generate trend overlays between monthly sentiment and BTC/ETH prices:
+
+```bash
+python trend_vs_price.py --asset BTC
+python trend_vs_price.py --asset ETH
+```
+
+Output charts are saved in `outputs/trend_plots/`.
+
+---
+
+## Notes
+
+- Headlines are short and sentiment is computed using TextBlob (rule-based).
+- Sentiment is aggregated monthly.
+- Prices are fetched from Yahoo Finance using the `yfinance` API.
+- No full-article text is used; analysis is headline-based.
+
+---
+
+## Limitations
+
+- No synonym normalization (e.g., “BTC” ≠ “Bitcoin”).
+- TextBlob may misclassify neutral financial headlines.
+- Results depend on headline phrasing and may miss subtle sentiment.
+
+---
+
+## Future Work
+
+- Replace TextBlob with FinBERT for finance-specific sentiment scoring.
+- Add synonym/entity normalization (BTC ↔ Bitcoin).
+- Integrate live news stream (e.g., Twitter, RSS).
+- Develop web-based frontend with search interface.
+- Add query expansion using pseudo-relevance feedback.
+
+---
+
+## Contact
+
+Seokhyun Lee  
+Email: sl251@illinois.edu
